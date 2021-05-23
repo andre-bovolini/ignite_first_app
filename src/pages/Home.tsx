@@ -10,8 +10,15 @@ interface Task {
   done: boolean;
 }
 
+type Darkmode = boolean
+
 export function Home() {
   const [tasks, setTasks] = useState<Task[]>([]);
+  const [darkMode, setDarkMode] = useState<Darkmode>(false)
+
+  const handleChangeMode = () => {
+    setDarkMode(!darkMode)
+  }
 
   function handleAddTask(newTaskTitle: string) {
     if (newTaskTitle !== '') {
@@ -55,14 +62,15 @@ export function Home() {
 
   return (
     <>
-      <Header />
+      <Header darkMode={darkMode} handleChangeMode={handleChangeMode}/>
 
-      <TodoInput addTask={handleAddTask} />
+      <TodoInput addTask={handleAddTask} darkMode={darkMode}/>
 
       <MyTasksList 
         tasks={tasks} 
         onPress={handleMarkTaskAsDone} 
-        onLongPress={handleRemoveTask} 
+        onLongPress={handleRemoveTask}
+        darkMode={darkMode}
       />
     </>
   )
